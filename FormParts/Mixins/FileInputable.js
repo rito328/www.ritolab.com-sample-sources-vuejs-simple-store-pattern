@@ -16,8 +16,9 @@ export const FileInputable = {
     },
 
     mounted () {
-        store.setFileRequiredAction((typeof this.params.required === 'boolean' ? this.params.required : false))
         this.privateState.name = this.params.name
+        const isRequired = typeof this.params.required === 'boolean' ? this.params.required : false
+        store.setRequiredAction(isRequired, this.privateState.name)
     },
 
     computed: {
