@@ -10,56 +10,54 @@ export default {
             required: false
         }
     },
-    setFileRequiredAction (bool) {
-        if (this.debug) console.log('setFileRequiredAction triggered with', bool)
-        this.state.file.required = bool
+    setRequiredAction (bool, type) {
+        switch (type) {
+            case 'file':  { this._setFileRequiredAction(bool);      break }
+            case 'image': { this._setFileImageRequiredAction(bool); break }
+            default: { break }
+        }
     },
     setParamAction (file, type) {
-        if (this.debug) console.log('setParamAction triggered with ', type)
         switch (type) {
-            case 'file': {
-                this.setFileAction(file)
-                break
-            }
-            case 'image': {
-                this.setFileImageAction(file)
-                break
-            }
-            default: {}
+            case 'file':  { this._setFileAction(file);      break }
+            case 'image': { this._setFileImageAction(file); break }
+            default: { break }
         }
     },
     removeParamAction (type) {
-        if (this.debug) console.log('removeParamAction triggered with ', type)
         switch (type) {
-            case 'file': {
-                this.removeFileAction()
-                break
-            }
-            case 'image': {
-                this.removeFileImageAction()
-                break
-            }
-            default: {}
+            case 'file':  { this._removeFileAction();      break }
+            case 'image': { this._removeFileImageAction(); break }
+            default: { break }
         }
     },
-    setFileAction (file) {
-        if (this.debug) console.log('setFileAction triggered.')
-        this.state.file.data = file
+    _setFileRequiredAction (bool) {
+        if (this.debug) console.log('setFileRequiredAction triggered with', bool) // eslint-disable-line no-console
+        this.state.file.required      = bool
     },
-    removeFileAction () {
-        if (this.debug) console.log('removeFileAction triggered.')
-        this.state.file.data = false
+    _setFileImageRequiredAction (bool) {
+        if (this.debug) console.log('setFileImageRequiredAction triggered with', bool) // eslint-disable-line no-console
+        this.state.fileImage.required = bool
     },
-    setFileImageAction (file) {
-        if (this.debug) console.log('setFileImageAction triggered.')
+    _setFileAction (file) {
+        if (this.debug) console.log('setFileAction triggered.') // eslint-disable-line no-console
+        this.state.file.data      = file
+    },
+    _setFileImageAction (file) {
+        if (this.debug) console.log('setFileImageAction triggered.') // eslint-disable-line no-console
         this.state.fileImage.data = file
     },
-    removeFileImageAction () {
-        if (this.debug) console.log('removeFileImageAction triggered.')
+    _removeFileAction () {
+        if (this.debug) console.log('removeFileAction triggered.') // eslint-disable-line no-console
+        this.state.file.data      = false
+    },
+    _removeFileImageAction () {
+        if (this.debug) console.log('removeFileImageAction triggered.') // eslint-disable-line no-console
         this.state.fileImage.data = false
     },
     destroyParamAction () {
-        this.removeFileAction()
-        this.removeFileImageAction()
+        if (this.debug) console.log('destroyParamAction triggered.') // eslint-disable-line no-console
+        this._removeFileAction()
+        this._removeFileImageAction()
     }
 }
