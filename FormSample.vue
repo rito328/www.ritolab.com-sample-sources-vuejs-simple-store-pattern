@@ -30,15 +30,15 @@
 
         methods: {
             isReady () {
-                let ready = false
-                const keys = Object.keys(this.sharedState);
+                let status = []
+                const keys = Object.keys(this.sharedState)
                 for (let i = 0; i < keys.length; i++) {
-                    let param = this.sharedState[keys[i]];
-                    if (param.required === true && param.data === false) {
-                        ready = true
-                    }
+                    let param = this.sharedState[keys[i]]
+                    status.push(param.required === true && param.data === false)
                 }
-                this.privateState.disabled = ready
+                this.privateState.disabled = !status.every(function(bool){
+                    return bool === false
+                })
             },
             send () {
                 if (!this.privateState.disabled) {
